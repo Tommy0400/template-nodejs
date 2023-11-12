@@ -10,7 +10,7 @@ const bot = new TelegramBot(telegramToken, { polling: true });
 // Maneja el comando de inicio (/start)
 bot.onText(/\/start/, (msg) => {
     const chatId = msg.chat.id;
-    bot.sendMessage(chatId, '¡Hola! Soy tu bot de Telegram. ¡Bienvenido!');
+    bot.sendMessage(chatId, 'Te amo. Soy tu bot de Telegram. ¡Bienvenido!');
 });
 
 app.use(express.static('public'));
@@ -20,5 +20,16 @@ app.get('*', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`App listening on port ${port}`);
+    console.log(`Servidor iniciado en el puerto ${port}`);
+    console.log(`Bot de Telegram escuchando comandos "/start"`);
+});
+
+// Manejador de errores para el servidor
+app.on('error', (err) => {
+    console.error('Error en el servidor:', err.message);
+});
+
+// Manejador de errores para el bot de Telegram
+bot.on('polling_error', (error) => {
+    console.error('Error en el bot de Telegram:', error.message);
 });
