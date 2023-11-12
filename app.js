@@ -1,35 +1,23 @@
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 3000;
 const TelegramBot = require('node-telegram-bot-api');
+const token = 'TU_TOKEN_DE_BOT'; // Reemplaza con tu token
 
-// Configura el token de tu bot de Telegram
-const telegramToken = '6631269530:AAEP084xOypzZlYiwD3sG7lkdwpscq4SgbE';
-const bot = new TelegramBot(telegramToken, { polling: true });
+// Crea un nuevo bot
+const bot = new TelegramBot(token, { polling: true });
 
-// Maneja el comando de inicio (/start)
+// Maneja los eventos de nuevos "star" (me gusta)
 bot.onText(/\/start/, (msg) => {
-    const chatId = msg.chat.id;
-    bot.sendMessage(chatId, 'Te amo. Soy tu bot de Telegram. ¡Bienvenido!');
+  const chatId = msg.chat.id;
+
+  // Responde con "te amo" cuando se inicia el bot
+  bot.sendMessage(chatId, 'Te amo ❤️');
 });
 
-app.use(express.static('public'));
+// Maneja cualquier mensaje
+bot.on('message', (msg) => {
+  const chatId = msg.chat.id;
 
-app.get('*', (req, res) => {
-    res.redirect('/');
-});
-
-app.listen(port, () => {
-    console.log(`Servidor iniciado en el puerto ${port}`);
-    console.log(`Bot de Telegram escuchando comandos "/start"`);
-});
-
-// Manejador de errores para el servidor
-app.on('error', (err) => {
-    console.error('Error en el servidor:', err.message);
-});
-
-// Manejador de errores para el bot de Telegram
-bot.on('polling_error', (error) => {
-    console.error('Error en el bot de Telegram:', error.message);
+  // Responde con "te amo" si el mensaje contiene "star" (o cualquier otra palabra)
+  if (msg.text && msg.text.toLowerCase().includes('star')) {
+    bot.sendMessage(chatId, 'Te amo ❤️');
+  }
 });
