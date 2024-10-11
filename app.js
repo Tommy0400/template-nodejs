@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
-const token = '6631269530:AAEP084xOypzZlYiwD3sG7lkdwpscq4SgbE'; // Reemplaza con tu token
+const token = '5696042008:AAEw-jq11QXZyiMFuqcIQt-VnPJwZTYebrg'; // Nuevo token
 const bot = new TelegramBot(token, { polling: true });
 
 bot.onText(/\/start/, (msg) => {
